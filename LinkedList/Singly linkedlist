@@ -1,0 +1,303 @@
+package linkedlist;
+
+public class LinkedList
+{
+    Node head;
+    
+    class Node
+    {
+        int data;
+        Node next;
+
+        Node(int d)
+        {
+            data = d;
+            next = null;
+        }       
+    }
+    
+    public LinkedList insert (LinkedList list, int data)
+    {
+        Node n = new Node(data);
+        
+        if (head == null)
+        {
+            head = n;
+        }
+        else
+        {
+            Node temp = head;
+       
+            while (temp.next != null)
+            {
+                temp = temp.next;
+            }
+            temp.next = n;
+        }
+        return list;
+    }
+        
+    public LinkedList deletekey (LinkedList list, int key) 
+    { 
+        Node current = head, prev = current; 
+          
+        if (current.data == key)
+        {
+            head = head.next;
+            System.out.println(key+ " : Found & Deleted \n----------------");
+        }
+        
+        while (current.data != key) 
+        {
+            if (current.next == null)
+            {
+                System.out.println(key + " : Not Found \n----------------");
+                return list;
+            }
+            prev = current; 
+            current = current.next;
+            if (current.data == key)
+            {
+                prev.next = current.next; 
+                System.out.println(key + " : Found & Deleted \n----------------");
+                return list;
+            }
+        }  
+        return list;
+    }
+    
+    public LinkedList deleteindex(LinkedList list, int index)
+    {
+        if (index == 0)
+        {
+            head = head.next;
+        }
+        
+        else    
+        {
+            Node current = head;
+            Node prev = current;
+            for (int i = 0; i < index; i++)
+            {
+                prev = current;
+                current = current.next;
+            }
+            prev.next = current.next;
+        }
+        return list;
+    }
+    
+    public LinkedList InsertAtFirst (LinkedList list, int data)
+    {
+        Node n1 = new Node(data);
+        n1.next = head;
+        head = n1;
+        
+        return list;
+    }
+    
+    public LinkedList InsertAtPosition (LinkedList list, int index, int data)
+    {
+        Node n2 = new Node(data);
+        
+        if (index == 0)
+        {
+            InsertAtFirst(list, data);
+        }
+        
+        Node n = head;
+        for (int i = 0; i < index - 1; i++)
+        {
+            n = n.next;
+        }
+        
+        n2.next = n.next;
+        n.next = n2;
+        
+        return list;
+    }
+    
+    public LinkedList Search (LinkedList list, int key)
+    {
+        Node n = head;
+        
+        while (n != null) 
+        {   
+            if (n.data == key) 
+            {
+                System.out.println("Record Found: " +n.data);
+                return list;
+            }
+            if (n.next == null)
+            {
+                System.out.println("Record Not Found");
+            }
+            n = n.next;
+        }
+    return list;
+    }
+    
+    public void Reverse (LinkedList list)
+    {
+        Node current = head;
+        Node prev = null;
+        Node n = null;
+
+        while (current != null)
+        {
+            n = current;
+            current = current.next;
+            n.next = prev;
+            prev = n;
+            head = n;
+        }
+    }
+    
+    public int FindLength (LinkedList list)
+    {
+        Node temp = head;
+        int count = 0;
+        
+        while (temp != null) 
+        {
+            count++;
+            temp = temp.next;
+        }
+       // System.out.println("Total Nodes : " +count);
+        return count;
+    }           
+    
+    public LinkedList Update (LinkedList list, int node, int value)
+    {
+        Node current = head;
+        if (head == null)
+        {
+            System.out.println("List is Empty!");
+        }
+        else if (node > FindLength(list))
+        {
+            System.out.println("Invalid Node!");
+            return list;
+        }
+        else    
+        {
+            for (int i = 1; i < node; i++)
+            {
+                current = current.next;
+            }
+            current.data = value;
+            list.printList(list);
+        }
+        return list; 
+    }
+    
+    public void sortList() 
+    {
+        Node current = head, index = null;  
+        int temp; 
+          
+        if(head == null) 
+        {  
+            System.out.println("List is Empty");;  
+        }  
+        
+        else 
+        {  
+            while(current != null) 
+            {  
+                index = current.next;  
+                  
+                while(index != null) 
+                {  
+                    if(current.data > index.data) 
+                    {  
+                        temp = current.data;  
+                        current.data = index.data;  
+                        index.data = temp;  
+                    }  
+                    index = index.next;  
+                }  
+                current = current.next;  
+            }      
+        }  
+    }  
+    
+    public void Frequency (LinkedList list, int value)
+    {
+        int count = 0;
+        Node temp = head;
+        while (temp != null)
+        {
+            if (temp.data == value)
+            {
+                count++;
+            }
+            temp = temp.next;
+        }
+        System.out.println("Total Value Frequency : " +count);
+    }
+    
+    public  void DeleteEnd (LinkedList list)
+    {
+        Node current = head, prev = null;
+        for (int i = 0; i < FindLength(list) - 1; i++) 
+        {
+            prev = current;
+            current = current.next;
+        }
+        prev.next = current.next;
+    }
+    
+    public void printList (LinkedList list)
+    {      
+        Node n1 = head;
+                
+        while (n1 != null)
+        {
+            System.out.println(n1.data);
+            n1 = n1.next;
+        }
+        System.out.println("----------------");
+    }
+    
+    public static void main(String[] args) 
+    {
+        LinkedList list = new LinkedList();
+        
+        list.insert(list, 1);
+        list.insert(list, 2);
+        list.insert(list, 3);
+        list.insert(list, 4);
+        list.printList(list);
+        
+        list.sortList();
+        list.printList(list);
+        
+        list.InsertAtFirst(list, 0);
+        list.printList(list);
+        
+       // list.InsertAtPosition(list, 5, 5); 
+       // list.printList(list);
+     
+        list.DeleteEnd(list);
+        list.printList(list);
+     /*   
+        list.deletekey(list, 10);  
+        list.printList(list);
+    
+        list.deleteindex(list, 3);
+        list.printList(list);
+        
+        list.FindLength(list);
+        
+        list.Search(list, 2);
+        
+        list.Reverse(list);
+        list.printList(list);
+    
+        list.Update(list, 5, 2);
+        
+        list.Frequency(list, 2);  
+*/    
+    }
+}
