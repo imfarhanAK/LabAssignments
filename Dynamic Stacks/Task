@@ -1,0 +1,108 @@
+package dynamicstack;
+
+public class DynamicStack 
+{
+    public static void main(String[] args)
+    {
+        StackClass nums = new StackClass();
+       
+        nums.push(10);
+        nums.show();
+        nums.push(20);
+        nums.show();
+        nums.push(30);
+        nums.show();
+        nums.push(40);
+        nums.show();
+        nums.push(50);
+        nums.show();
+        nums.push(60);
+        nums.show();
+        nums.push(70);
+        nums.show();
+
+        nums.pop();
+        nums.show();
+        nums.pop();
+        nums.show();
+        nums.pop();
+        nums.show();
+        nums.pop();
+        nums.show();
+    }
+}
+
+class StackClass
+{
+    int top = 0;
+    int cap = 2;
+    int [] stack = new int [cap];
+    
+    public void push (int data) 
+    {
+        if (top == cap) 
+        {
+            expandCapacity();
+        }
+        System.out.println("Pushed Element : " + (stack [top++] = data));
+    }
+    
+    public int pop ()
+    {
+        if (isEmpty())
+        {
+            System.out.println ("Stack Underlow!");
+            return top;
+        }
+               
+        int data = stack [--top];
+        stack [top] = 0;
+        shrinkCapacity();
+        return data;   
+    }
+    
+    public int peek ()
+    {
+        int d = stack [--top];
+        return d;
+    }
+
+    public boolean isEmpty()
+    {
+        return getSize() <= 0;
+    }
+    
+    public int getSize()
+    {
+        return top;
+    }
+    
+    public void expandCapacity()
+    {
+        int [] newStack = new int [cap * 2];
+        System.arraycopy(stack, 0, newStack, 0, cap);
+        stack = newStack;
+        cap *= 2;
+    }
+    
+    public void shrinkCapacity()
+    {
+        if (top % 2 == 0 && cap == top * 2)
+        {
+            cap = cap / 2;
+        }
+        int [] newStack = new int [cap];
+        System.arraycopy(stack, 0, newStack, 0, cap);
+        stack = newStack;
+    }
+    
+    public void show ()
+    {
+        System.out.print("Stack Data : ");
+        for (int n : stack)
+        {
+            System.out.print(n+ " ");
+        }
+        System.out.println("\n--------------");
+    }
+}
