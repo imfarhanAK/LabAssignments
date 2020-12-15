@@ -1,0 +1,415 @@
+// --- Modules Covered in Doubly Linked List ---
+//  1.  Insertion At Start.
+//  2.  Insertion At End.
+//  3.  Insertion At Position by Index.
+//  4.  Insertion At Position by Node.
+//  5.  Delete At Start.
+//  6.  Delete At End.
+//  7.  Delete by Index.
+//  8.  Delete by Node.
+//  9.  Delete by Key / Value.
+//  10. Update by Node. 
+//  11. Search by Key / Value.
+//  12. Sorting List.
+//  13. Reverse List
+//  14. Find Length of List. 
+//  15. Display / Print / Show List.
+
+package doublylinkedlist;
+
+public class DoublyLinkedList 
+{
+    Node head;
+    class Node
+    {
+        int data;
+        Node next;
+        Node prev;
+        
+        Node(int data)
+        {
+            this.data = data;
+            this.next = null;
+            this.prev = null;
+        }
+    }
+    
+    public DoublyLinkedList InsertAtFirst (DoublyLinkedList list, int data)
+    {
+        Node n1 = new Node(data);
+       
+        n1.next = head;
+        head.prev = n1;
+        head = n1;
+        
+        return list;
+    }
+    
+    public DoublyLinkedList InsertAtPostionbyIndex (DoublyLinkedList list, int index, int data)
+    {
+        Node n2 = new Node(data);
+        
+        if (index == 0)
+        {
+            InsertAtFirst(list, data);
+        }
+        
+        else if (index == FindLength(list))
+        {
+            insertAtEnd(list, data);
+        }
+        
+        else if (index > FindLength(list) - 1)    
+        {
+            System.out.println("Invalid Index Insertion!");
+            return list;
+        }
+        
+        else
+        {
+            Node temp = head;
+            for (int i = 0; i < index - 1; i++)
+            {
+                temp = temp.next;
+            }
+
+            n2.prev = temp; 
+            n2.next = temp.next;
+            temp.next.prev = n2;
+            temp.next = n2;
+        } 
+        return list;
+    }
+    
+    public DoublyLinkedList InsertAtPostionbyNode (DoublyLinkedList list, int Node, int data)
+    {
+        Node n2 = new Node(data);
+        
+        if (Node == 1)
+        {
+            InsertAtFirst(list, data);
+        }
+        
+        else if (Node == FindLength(list) + 1)
+        {
+            insertAtEnd(list, data);
+        }
+        
+        else if (Node > FindLength(list) || Node == 0)
+        {
+            System.out.println("Invalid Node Insertion!");
+            return list;
+        }
+             
+        else
+        {
+            Node temp = head;
+            for (int i = 1; i < Node - 1; i++)
+            {
+                temp = temp.next;
+            }
+
+            n2.prev = temp; 
+            n2.next = temp.next;
+            temp.next.prev = n2;
+            temp.next = n2;
+        }
+        return list;                
+    }
+    
+    public DoublyLinkedList insertAtEnd (DoublyLinkedList list, int data)
+    {
+        Node n = new Node(data);
+        
+        if (head == null)
+        {
+            head = n;
+        }
+        else
+        {
+            Node temp = head;
+   
+            while (temp.next != null)
+            {
+                temp = temp.next;
+            }
+            temp.next = n;
+            n.prev= temp;
+        }
+        return list;
+    }
+    
+    public DoublyLinkedList deleteAtFirst (DoublyLinkedList list)
+    {
+        head = head.next;
+        head.prev = null;
+        return list;
+    }
+    
+    public DoublyLinkedList deletekey (DoublyLinkedList list, int key) 
+    { 
+        Node current = head;
+        Node prev = current; 
+          
+        if (current.data == key)
+        {
+            deleteAtFirst(list);
+            System.out.println(key+ " : Key Found & Deleted \n----------------");
+        }
+        
+        while (current.data != key) 
+        {
+            if (current.next == null)
+            {
+                System.out.println(key + " : Key Not Found \n----------------");
+                return list;
+            }            
+            prev = current; 
+            current = current.next;
+            if (current.data == key && current.next == null) 
+            {
+                deleteAtEnd(list);
+                return list;
+            }
+            if (current.data == key)
+            {
+                prev.next = current.next;
+                current.next.prev = current.prev;
+                System.out.println(key + " : Key Found & Deleted \n----------------");
+                return list;
+            }
+        }  
+        return list;
+    }
+    
+    public DoublyLinkedList deleteindex(DoublyLinkedList list, int index)
+    {
+        if (index == 0)
+        {
+            deleteAtFirst(list);
+        }
+        
+        else if (index > FindLength(list) - 1)
+        {
+            System.out.println("Index Not Found!");
+            return list;
+        }
+        
+        else if (index == FindLength(list) - 1)
+        {
+            deleteAtEnd(list);
+        }
+        
+        else    
+        {
+            Node current = head;
+            Node prev = current;
+            for (int i = 0; i < index; i++)
+            {
+                prev = current;
+                current = current.next;
+            }
+            prev.next = current.next;
+            current.next.prev = current.prev;
+        }
+        return list;
+    }
+    
+    public DoublyLinkedList deleteNode (DoublyLinkedList list, int node)
+    {
+        if (node == 1)
+        {
+            deleteAtFirst(list);
+        }
+        
+        else if (node > FindLength(list) || node == 0)
+        {
+            System.out.println("Node Not Found!");
+            return list;
+        }
+        
+        else if (node == FindLength(list))
+        {
+            deleteAtEnd(list);
+        }
+        
+        else    
+        {
+            Node current = head;
+            Node prev = current;
+            for (int i = 1; i < node; i++)
+            {
+                prev = current;
+                current = current.next;
+            }
+            prev.next = current.next;
+            current.next.prev = current.prev;
+        }
+        return list;
+    }
+    
+    public DoublyLinkedList deleteAtEnd (DoublyLinkedList list)
+    {
+        Node current = head;
+        Node prev = current;
+        for (int i = 0; i < FindLength(list) - 1; i++) 
+        {
+            prev = current;
+            current = current.next;
+        }
+        prev.next = current.next;
+        return list;
+    }
+    
+    public DoublyLinkedList Search (DoublyLinkedList list, int key)
+    {
+        Node n = head;
+        
+        while (n != null) 
+        {   
+            if (n.data == key) 
+            {
+                System.out.println("Record Found: " +n.data);
+                return list;
+            }
+            if (n.next == null)
+            {
+                System.out.println("Record Not Found");
+            }
+            n = n.next;
+        }
+    return list;
+    }
+    
+    public void Reverse (DoublyLinkedList list)
+    {
+        Node temp = null; 
+        Node current = head; 
+        
+        while (current != null)
+        { 
+            temp = current.prev; 
+            current.prev = current.next;
+            current.next = temp; 
+            current = current.prev; 
+        } 
+        if (temp != null) 
+        {
+            head = temp.prev;
+        }
+    }
+            
+    public DoublyLinkedList Update (DoublyLinkedList list, int node, int value)
+    {
+        Node current = head;
+        if (node > FindLength(list) || node == 0)
+        {
+            System.out.println("Invalid Node!");
+            return list;
+        }
+        else    
+        {
+            for (int i = 1; i < node; i++)
+            {
+                current = current.next;
+            }
+            current.data = value;
+            show(list);
+        }
+        return list; 
+    }
+    
+    public void sortList()
+    {
+        Node current = head, index = null;
+        int temp; 
+        
+        while(current != null) 
+        {  
+            index = current.next;  
+                  
+            while(index != null) 
+            {  
+                if(current.data < index.data) 
+                {  
+                    temp = current.data;  
+                    current.data = index.data;  
+                    index.data = temp;  
+                }  
+                index = index.next;  
+            }  
+            current = current.next;  
+        }      
+    }  
+    
+    public int FindLength (DoublyLinkedList list)
+    {
+        Node temp = head;
+        int count = 0;
+        
+        while (temp != null) 
+        {
+            count++;
+            temp = temp.next;
+        }
+        return count;
+    }    
+    
+    public void show (DoublyLinkedList list)
+    {      
+        if (head == null) 
+        {
+            System.out.println("List is Empty!");
+        }
+        
+        Node n1 = head;
+        while (n1 != null)
+        {
+            System.out.println(n1.data);
+            n1 = n1.next;
+        }
+        System.out.println("----------------");
+    }
+    
+    public static void main(String[] args)
+    {
+        DoublyLinkedList list = new DoublyLinkedList();
+        
+        list.insertAtEnd(list, 6);
+        list.insertAtEnd(list, 9);
+        list.insertAtEnd(list, 55);
+        list.insertAtEnd(list, 2);
+        list.insertAtEnd(list, 11);
+        list.show(list);
+        
+        list.InsertAtFirst(list, 10);
+        list.show(list);
+        
+        System.out.println("Total Nodes: " +list.FindLength(list));
+        
+        list.InsertAtPostionbyIndex(list, 6, 1);
+        list.show(list);
+
+        list.InsertAtPostionbyNode(list, 0, 34);
+        list.show(list);
+        
+        list.Search(list, 7);
+        
+        list.sortList();
+        list.show(list);
+        
+        list.Reverse(list);
+        list.show(list);
+        
+        list.deleteindex(list, 7);
+        list.show(list);
+       
+        list.deleteNode(list, 7);
+        list.show(list);
+        
+        list.deletekey(list, 55);
+        list.show(list);
+     
+        list.Update(list, 0, 111);
+    }
+}
