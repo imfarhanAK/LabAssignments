@@ -1,0 +1,89 @@
+package stacks;
+
+public class Stacks 
+{
+    public static void main(String[] args)
+    {
+        StackClass nums = new StackClass();
+        
+        System.out.println("Is Stack Empty : " +nums.isEmpty());
+        nums.pop();
+        nums.push(10);
+        nums.push(20);
+        nums.push(30);
+        nums.push(40);
+        System.out.println("Stack Size : " +nums.getSize());
+        nums.show();
+        
+        System.out.println("Poped Element : " +nums.pop());
+        System.out.println("Stack Size : " +nums.getSize());
+        nums.show();
+        
+        System.out.println("Peek Element : " +nums.peek());
+        System.out.println("Is Stack Empty : " +nums.isEmpty());
+    }
+}
+
+class StackClass
+{
+    int top = 0;
+    int cap = 3;
+    int [] stack = new int [cap];
+    
+    public void push (int data) 
+    {
+        if (isFull()) 
+        {
+            System.out.println("Stack Overflow!");
+        }
+        
+        else 
+        {
+            System.out.println("Pushed Element : " + (stack [top++] = data));
+        }
+    }
+    
+    public int pop ()
+    {
+        if (isEmpty())
+        {
+            System.out.println ("Stack Underflow!");
+            return top;
+        }
+               
+        int data = stack [--top];
+        stack [top] = 0;
+        return data;     
+    }
+    
+    public int peek ()
+    {
+        int d = stack [--top];
+        return d;
+    }
+
+    public boolean isFull()
+    {
+        return getSize() == cap;
+    }
+    
+    public boolean isEmpty()
+    {
+        return getSize() <= 0;
+    }
+    
+    public int getSize()
+    {
+        return top;
+    }
+    
+    public void show ()
+    {
+        System.out.print("Stack Data : ");
+        for (int n : stack)
+        {
+            System.out.print(n+ " ");
+        }
+        System.out.println("\n--------------");
+    }
+}
