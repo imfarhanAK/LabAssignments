@@ -1,5 +1,5 @@
 # DSA Lab Assignments
-DSA Lab Assignments in Java Language
+*DSA Lab Assignments in Java Language*
 
 - LinkedList
 - Stacks
